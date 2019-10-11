@@ -137,14 +137,23 @@ class SnippetDetailView(SnippetView, DetailView):
         self.object = self.get_object()
 
         ctx = super(SnippetDetailView, self).get_context_data(**kwargs)
+        first_line = self.get_snippet_first_line()
         ctx.update(
             {
                 'wordwrap': self.object.lexer in highlight.LEXER_WORDWRAP,
                 'diff': self.get_snippet_diff(),
                 'raw_mode': config.RAW_MODE_ENABLED,
+                'first_line': first_line,
             }
         )
         return ctx
+    
+    def get_snippet_first_line(self):
+        content = self.get_object().content.replace('\n', ' ').replace('\r', ' ').strip()
+        content = ' '.join(content.split())
+        if len(content) > 125:
+            content = content[0:125] + " ..."        
+        return content
 
 
 class SnippetRawView(SnippetDetailView):
