@@ -87,6 +87,9 @@ class dpasteAppConfig(AppConfig):
     # Key names of the default text and code lexer.
     PLAIN_TEXT_SYMBOL = '_text'
     PLAIN_CODE_SYMBOL = '_code'
+    
+    # Headline text
+    HEADLINE_TEXT = 'Dpaste'
 
     @property
     def TEXT_FORMATTER(self):
